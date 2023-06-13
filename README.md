@@ -1,6 +1,6 @@
 # Scalable 3D Captioning with Pretrained Models
 
-[Chris Rockwell*](https://crockwell.github.io), [Tiange Luo*](https://tiangeluo.github.io/), [Honglak Lee†](https://web.eecs.umich.edu/~honglak/), [Justin Johnson†](https://web.eecs.umich.edu/~justincj)
+[Tiange Luo*](https://tiangeluo.github.io/), [Chris Rockwell*](https://crockwell.github.io), [Honglak Lee†](https://web.eecs.umich.edu/~honglak/), [Justin Johnson†](https://web.eecs.umich.edu/~justincj)
 
 *Equal contribution    †Equal Advising
 

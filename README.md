@@ -24,7 +24,7 @@ Full code is coming soon.
 If you find this code useful, please consider citing:
 ```
     @article{Rockwell2023,
-      author = {Chris Rockwell and Tiange Luo and Honglak Lee and Justin Johnson},
+      author = {Tiange Luo and Chris Rockwell and Honglak Lee and Justin Johnson},
       title = {Scalable 3D Captioning with Pretrained Models},
       journal = {arXiv},
       year = 2023

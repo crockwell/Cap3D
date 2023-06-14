@@ -23,12 +23,12 @@ Full code is coming soon.
 ## Citation
 If you find this code useful, please consider citing:
 ```
-    @article{luo2023scalable,
-      author = {Tiange Luo and Chris Rockwell and Honglak Lee and Justin Johnson},
+@article{luo2023scalable,
+      title={Scalable 3D Captioning with Pretrained Models},
       author={Luo, Tiange and Rockwell, Chris and Lee, Honglak and Johnson, Justin},
       journal={arXiv preprint arXiv:2306.07279},
-      year = 2023
-    }
+      year={2023}
+}
 ```
 
 ## Acknowledgments

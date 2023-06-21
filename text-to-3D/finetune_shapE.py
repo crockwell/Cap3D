@@ -1,6 +1,6 @@
 # ==============================================================================
 # Copyright (c) 2023 Tiange Luo, tiange.cs@gmail.com
-# Last modified: June 20, 2023
+# Last modified: June 21, 2023
 #
 # This code is licensed under the MIT License.
 # ==============================================================================
@@ -9,12 +9,12 @@
 import torch
 import torch.optim as optim
 
-from tqdm.auto import tqdm
-from point_e.diffusion.configs import DIFFUSION_CONFIGS, diffusion_from_config
-from point_e.diffusion.sampler import PointCloudSampler
-from point_e.models.download import load_checkpoint
-from point_e.models.configs import MODEL_CONFIGS, model_from_config
-from point_e.util.plotting import plot_point_cloud
+from shap_e.diffusion.sample import sample_latents
+from shap_e.diffusion.gaussian_diffusion import diffusion_from_config
+from shap_e.models.download import load_model, load_config
+from shap_e.models.configs import model_from_config
+from shap_e.util.notebooks import create_pan_cameras, decode_latent_images, gif_widget
+from IPython import embed
 
 import os
 import torch.distributed as dist
@@ -27,9 +27,12 @@ from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 import pickle
 import pandas as pd
+import csv
 import time
+import random
 import numpy as np
 from datetime import datetime
+
 
 def setup_ddp(gpu, args):
     dist.init_process_group(                                   
@@ -38,21 +41,17 @@ def setup_ddp(gpu, args):
         world_size=args.world_size,                              
         rank=gpu)
 
-    torch.manual_seed(0)
     torch.cuda.set_device(gpu)
 
-
-# please modify the path to your data path
 class my_dataset(Dataset):
-    def __init__(self, pts_path):
+    def __init__(self, latent_code_path):
         self.captions = pd.read_csv('./example_material/Cap3D_automated_Objaverse.csv', header=None)
         self.valid_uid = list(pickle.load(open('./example_material/training_set.pkl','rb')))
         self.final_uid = self.valid_uid
         self.n2idx = {}
         for i in range(len(self.captions)):
             self.n2idx[self.captions[0][i]] = i
-        self.pts_path = pts_path
-        
+        self.latent_code_path = latent_code_path        
 
     def __len__(self):
         return len(self.final_uid)
@@ -60,29 +59,29 @@ class my_dataset(Dataset):
     def __getitem__(self, i):
         idx = self.n2idx[self.final_uid[i]]
         assert self.final_uid[i] == self.captions[0][idx]
-        data_tensor = torch.load(os.path.join(self.pts_path, self.captions[0][idx]+'.pt'))
+        latent = torch.load(os.path.join(self.latent_code_path,self.captions[0][idx]+'.pt')).squeeze()
 
-        return {'caption': self.captions[1][idx], 'pts': data_tensor}
+        return {'caption': self.captions[1][idx], 'latent': latent}
 
 class my_dataset_val(Dataset):
-    def __init__(self, pts_path):
+    def __init__(self, latent_code_path):
         self.captions = pd.read_csv('./example_material/Cap3D_automated_Objaverse.csv', header=None)
         self.valid_uid = list(pickle.load(open('./example_material/validation_set.pkl','rb')))
         self.final_uid = self.valid_uid
         self.n2idx = {}
         for i in range(len(self.captions)):
             self.n2idx[self.captions[0][i]] = i
-        self.pts_path = pts_path
+        self.latent_code_path = latent_code_path
 
     def __len__(self):
         return len(self.final_uid)
 
     def __getitem__(self, i):
         idx = self.n2idx[self.final_uid[i]]
-        data_tensor = torch.load(os.path.join(self.pts_path, self.captions[0][idx]+'.pt'))
         assert self.final_uid[i] == self.captions[0][idx]
+        latent = torch.load(os.path.join(self.latent_code_path,self.captions[0][idx]+'.pt')).squeeze()
 
-        return {'caption': self.captions[1][idx], 'pts': data_tensor}
+        return {'caption': self.captions[1][idx], 'latent': latent}
 
 def train(rank, args):
     if args.gpus > 1:
@@ -92,6 +91,8 @@ def train(rank, args):
     batch_size = args.batch_size
     learning_rate = args.lr
     save_name = args.save_name
+    f = open('./logs/%s.csv'%save_name, 'a')
+    writer = csv.writer(f)
 
     torch.manual_seed(rank+int(learning_rate*1e6)+int(datetime.now().timestamp()))
 
@@ -112,11 +113,10 @@ def train(rank, args):
         print('reload from ./model_ckpts/%s.pth'%args.resume_name)
         checkpoint = torch.load('./model_ckpts/%s.pth'%args.resume_name, map_location=device)
 
-    base_name = 'base40M-textvec'
-    model = model_from_config(MODEL_CONFIGS[base_name], device)
     if not resume_flag:
-        model.load_state_dict(load_checkpoint(base_name, device))
+        model = load_model('text300M', device=device)
     else:
+        model = model_from_config(load_config('text300M'), device=device)
         model.load_state_dict(checkpoint['model_state_dict'])
     model.train()
     if args.gpus > 1:
@@ -124,12 +124,11 @@ def train(rank, args):
                 model, device_ids=[rank], find_unused_parameters=False
         )
     
-    diffusion = diffusion_from_config(DIFFUSION_CONFIGS[base_name])
-    my_dataset = my_dataset(args.pts_pt_path)
-    data_loader = DataLoader(my_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
-    my_dataset_val = my_dataset_val(args.pts_pt_path)
+    diffusion = diffusion_from_config(load_config('diffusion'))
+    my_dataset = my_dataset(args.latent_code_path)
+    data_loader = DataLoader(my_dataset, batch_size=batch_size, num_workers=8, prefetch_factor=4, shuffle=True, drop_last=True)
+    my_dataset_val = my_dataset_val(args.latent_code_path)
     data_loader_val = DataLoader(my_dataset_val, batch_size=batch_size, num_workers=8, prefetch_factor=4, drop_last=True)
-
 
 
     optimizer= optim.AdamW(model.parameters(), lr=learning_rate)
@@ -148,8 +147,8 @@ def train(rank, args):
             s2 = time.time()
             prompt = data['caption']
             model_kwargs=dict(texts=prompt)
-            t = torch.randint(0, DIFFUSION_CONFIGS[base_name]['timesteps'], size=(batch_size,), device=device) 
-            x_start = data['pts'].cuda()
+            t = torch.randint(0, load_config('diffusion')['timesteps'], size=(batch_size,), device=device) 
+            x_start = data['latent'].cuda()
 
             optimizer.zero_grad()
             loss = diffusion.training_losses(model, x_start, t, model_kwargs=model_kwargs)
@@ -170,24 +169,34 @@ def train(rank, args):
                 if args.gpus == 1 or (args.gpus >1 and dist.get_rank() == 0):
                     print('rank: ',rank,time.time()-s2,' epoch: ', epoch, i, final_loss.item())
                 if (i+1)%400 == 0:
-                    torch.save({'model_state_dict': model.module.state_dict(), 
-                                'optimizer_state_dict': optimizer.state_dict(),
-                                'scheduler_state_dict': lr_scheduler.state_dict(),
-                                }, './model_ckpts/%s_epoch%d_%d.pth'%(save_name, epoch, i+start_iter))
+                    if args.gpus > 1:
+                        torch.save({'model_state_dict': model.module.state_dict(), 
+                                    'optimizer_state_dict': optimizer.state_dict(),
+                                    'scheduler_state_dict': lr_scheduler.state_dict(),
+                                    }, './model_ckpts/%s_epoch%d_%d.pth'%(save_name, epoch, i+start_iter))
+                    else:
+                        torch.save({'model_state_dict': model.state_dict(), 
+                                    'optimizer_state_dict': optimizer.state_dict(),
+                                    'scheduler_state_dict': lr_scheduler.state_dict(),
+                                    }, './model_ckpts/%s_epoch%d_%d.pth'%(save_name, epoch, i+start_iter))
                 if i%4000 == 0:
                     with torch.no_grad():
                         val_loss = []
                         for j, dataval in enumerate(data_loader_val):
                             prompt = data['caption']
                             model_kwargs=dict(texts=prompt)
-                            t = torch.randint(0, DIFFUSION_CONFIGS[base_name]['timesteps'], size=(batch_size,), device=device) 
-                            x_start = data['pts'].cuda()
+                            t = torch.randint(0, load_config('diffusion')['timesteps'], size=(batch_size,), device=device) 
+                            x_start = data['latent'].cuda()
                             loss = diffusion.training_losses(model, x_start, t, model_kwargs=model_kwargs)
                             final_loss = torch.mean(loss['loss'])
                             print('validation %d/%d: '%(j, len(data_loader_val)), final_loss.item())
                             val_loss.append(final_loss.item())
                         val_mean_loss = torch.mean(torch.Tensor(val_loss)).item()
+                        writer.writerow([epoch, i+start_iter, val_mean_loss])
+                        f.flush()
+                        os.fsync(f.fileno())
                         print('rank: ',rank, i, val_mean_loss)
+
 
 
 if __name__ == '__main__':
@@ -200,7 +209,8 @@ if __name__ == '__main__':
     model_group.add_argument('--lr', type = float, default = 1e-5, help = 'learning rate')
     model_group.add_argument('--batch_size', type = int, default = 64, help = 'batch size')
     model_group.add_argument('--epoch', type = int, default = 25, help = 'total epoch')
-    model_group.add_argument('--pts_pt_path', type = str, default = './Cap3D_pcs_pt', help = 'the directory to the .pt file which store point clouds')
+    model_group.add_argument('--latent_code_path', type = str, default = './Cap3D_latentcodes', help = 'the directory to the .pt file which store Shap-E latent codes')
+
 
     args = parser.parse_args()
 

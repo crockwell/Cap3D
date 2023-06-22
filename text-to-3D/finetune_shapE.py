@@ -5,8 +5,8 @@
 # This code is licensed under the MIT License.
 #
 # If you use or modify this code in your project, we kindly ask that you include
-# this copyright notice in each file where the code is used. 
-# Your cooperation helps acknowledge the effort that went into creating this project. 
+# this copyright notice in each file where the code is used. Your cooperation helps 
+# acknowledge the effort that went into creating this project. 
 # ==============================================================================
 
 

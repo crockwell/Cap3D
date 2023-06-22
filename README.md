@@ -1,8 +1,6 @@
 # Scalable 3D Captioning with Pretrained Models
 
-[Tiange Luo*](https://tiangeluo.github.io/), [Chris Rockwell*](https://crockwell.github.io), [Honglak Lee†](https://web.eecs.umich.edu/~honglak/), [Justin Johnson†](https://web.eecs.umich.edu/~justincj)
-
-*Equal contribution    †Equal Advising
+[Tiange Luo*](https://tiangeluo.github.io/), [Chris Rockwell*](https://crockwell.github.io), [Honglak Lee†](https://web.eecs.umich.edu/~honglak/), [Justin Johnson†](https://web.eecs.umich.edu/~justincj) (*Equal contribution    †Equal Advising)
 
 Data download available at [Hugging Face](https://huggingface.co/datasets/tiange/Cap3D)
 

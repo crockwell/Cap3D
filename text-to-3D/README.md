@@ -1,6 +1,6 @@
 This folder contains codes for our Text-to-3D experiments in terms of finetuning and evaluation. 
 
-Some of our finetuned models are in https://huggingface.co/datasets/tiange/Cap3D/tree/main/our_finetuned_models. 
+Our finetuned models can be downloaded from https://huggingface.co/datasets/tiange/Cap3D/tree/main/our_finetuned_models. It currently includes Shap-E and Point-E (text-to-3D) fine models fintuned with 330k Cap3D captions. 
 
 ## Finetune Point-E (Text-to-3D)
 ```

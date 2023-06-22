@@ -25,9 +25,9 @@ def main():
     name = 'blip2_t5'
     model_type = 'pretrain_flant5xxl'
 
-    outfilename = f'{args.parent_dir}/captions_view_{args.view_number}.pkl'
-    infolder = f'{args.parent_dir}/img_view_{args.view_number}/*.jpg'
-
+    outfilename = f'{args.parent_dir}/Cap3D_captions/Cap3D_captions_view{args.view_number}.pkl'
+    infolder = f'{args.parent_dir}/Cap3D_imgs/Cap3D_imgs_view{args.view_number}/*.jpeg'
+    
     if os.path.exists(outfilename):
         with open(outfilename, 'rb') as f:
             all_output = pkl.load(f)
@@ -38,8 +38,8 @@ def main():
     ct = 0
 
     all_files = glob.glob(infolder)
-    all_imgs = [x for x in all_files if ".jpg" in x.split("_")[-1]]
-    print("len of .jpg", len(all_imgs))
+    all_imgs = [x for x in all_files if ".jpeg" in x.split("_")[-1]]
+    print("len of .jpeg", len(all_imgs))
 
     all_imgs = [x for x in all_imgs if x not in all_output]
     print("len of new", len(all_imgs))

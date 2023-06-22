@@ -1,5 +1,7 @@
 This folder contains codes for our Text-to-3D experiments in terms of finetuning and evaluation. 
 
+Some of our finetuned models are in https://huggingface.co/datasets/tiange/Cap3D/tree/main/our_finetuned_models. 
+
 ## Finetune Point-E (Text-to-3D)
 ```
 ## first git clone https://github.com/openai/point-e.git, and install with pip install -e .

@@ -8,6 +8,6 @@ Please first download our Blender from https://huggingface.co/datasets/tiange/Ca
 # --parent_dir: the directory store the rendered images and their associated camera matrix
 # Rendered images & camera matrix will stored at partent_dir/Cap3D_imgs/
 
-./blender-3.4.1-linux-x64/blender -b -P render_script.py -- --object_path_pkl './example_material/example_object_path.pkl' --parent_dir './example_material
+./blender-3.4.1-linux-x64/blender -b -P render_script.py -- --object_path_pkl './example_material/example_object_path.pkl' --parent_dir './example_material'
 ```
 

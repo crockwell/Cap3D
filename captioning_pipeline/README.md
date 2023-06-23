@@ -19,6 +19,7 @@ unzip blender.zip
 ```
 
 ## BLIP2
+Please install BLIP2:
 ```
 conda create -n Cap3D python=3.8
 conda activate Cap3D
@@ -35,4 +36,16 @@ python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_f
 # use QA branch to generate geometrical descriptions (as shown in Figure 4, https://arxiv.org/abs//2306.07279)
 
 python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_flant5xxl' --use_qa
+```
+
+## CLIP + GPT4
+Please install CLIP and GPT4-api first:
+```
+pip install openai
+pip install git+https://github.com/openai/CLIP.git
+```
+
+Please input your openai api key. The results will be saved as `{parent_dir}/Cap3D_captions/Cap3d_captions_final.csv`.
+```
+python caption_clip_gpt4.py --parent_dir './example_material' --openai_api_key 'Your-key'
 ```

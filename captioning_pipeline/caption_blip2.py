@@ -6,7 +6,6 @@ import pickle as pkl
 from tqdm import tqdm
 import os
 import argparse
-from IPython import embed
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -62,7 +61,7 @@ def main(view_number):
         else:
             x = model.generate({"image": image}, use_nucleus_sampling=True, num_captions=5)
 
-        all_output[filename] = [z for z in x]
+        all_output[os.path.basename(filename).split('.')[0]] = [z for z in x]
         
         if ct < 10 or (ct % 100 == 0 and ct < 1000) or (ct % 1000 == 0 and ct < 10000) or ct % 10000 == 0:
             print(filename)

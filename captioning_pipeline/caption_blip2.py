@@ -10,7 +10,7 @@ import argparse
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--parent_dir", type = str, default='./example_material')
-    parser.add_argument("--model_type", type = str, default='pretrain_flant5xxl', help='pretrain_flant5xxl or pretrain_flant5xl')
+    parser.add_argument("--model_type", type = str, default='pretrain_flant5xxl', choices=['pretrain_flant5xxl', 'pretrain_flant5xl'])
     parser.add_argument("--use_qa", action="store_true")
     return parser.parse_args()
 

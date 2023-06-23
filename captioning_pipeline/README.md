@@ -39,8 +39,8 @@ python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_f
 python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_flant5xxl' --use_qa
 ```
 
-## CLIP + GPT4
-Please install CLIP and GPT4-api first:
+## CLIP + GPT
+Please install CLIP and GPT-api first:
 ```
 conda activate Cap3D
 pip install openai
@@ -48,6 +48,8 @@ pip install git+https://github.com/openai/CLIP.git
 ```
 
 Please input your openai api key. The results will be saved as `{parent_dir}/Cap3D_captions/Cap3d_captions_final.csv`.
+Our paper used GPT4, while you can try GPT3.5 which is much cheaper ($0.03 vs. $0.0015 per 1k tokens): --gpt_type == ['gpt4', 'gpt3.5'].
+
 ```
-python caption_clip_gpt4.py --parent_dir './example_material' --openai_api_key 'Your-key'
+python caption_clip_gpt.py --parent_dir './example_material' --openai_api_key 'Your-key' --gpt_type 'gpt4'
 ```

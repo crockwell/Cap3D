@@ -27,12 +27,13 @@ from decimal import Decimal, getcontext
 getcontext().prec = 28  # Set the precision for the decimal calculations.
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--pkl', type = str, required = True)
+parser.add_argument('--object_path_pkl', type = str, required = True)
+parser.add_argument("--parent_dir", type = str, default='./example_material')
 
 argv = sys.argv[sys.argv.index("--") + 1 :]
 args = parser.parse_args(argv)
 
-uid_paths = pickle.load(open(args.pkl, 'rb'))
+uid_paths = pickle.load(open(args.object_path_pkl, 'rb'))
 # random.shuffle(uids)
 
 
@@ -194,19 +195,10 @@ def project_points_to_camera_space(obj, camera):
     # print(is_within_ndc)
     return bbox_image
 
-######### prepare the scene
+# prepare the scene
 bpy.context.scene.render.image_settings.file_format = 'PNG'
 bpy.data.objects['Cube'].select_set(True)
 bpy.ops.object.delete()
-
-######### background: transparent or white
-if bg_type == 1:
-    # transparent background
-    bpy.context.scene.render.image_settings.color_mode = 'RGBA'
-    bpy.context.scene.render.film_transparent = True
-else:
-    bpy.context.scene.world.node_tree.nodes["Background"].inputs[0].default_value = (1.0, 1.0, 1.0, 1.0)
-    bpy.context.scene.render.film_transparent = False
 
 # Create lights
 
@@ -224,7 +216,7 @@ def create_light(name, light_type, energy, location, rotation):
 
 def three_point_lighting():
     
-    # Key light
+    # Key ligh
     key_light = create_light(
         name="KeyLight",
         light_type='AREA',
@@ -257,8 +249,9 @@ def three_point_lighting():
 three_point_lighting()
 
 for i in range(8):
-    os.makedirs('./Cap3D_imgs/Cap3D_imgs_view%d/'%i, exist_ok=True)
-os.makedirs('./Cap3D_imgs/Cap3D_captions_final/', exist_ok=True)
+    os.makedirs(os.path.join(args.parent_dir, 'Cap3D_imgs', 'Cap3D_imgs_view%d'%i), exist_ok=True)
+    os.makedirs(os.path.join(args.parent_dir, 'Cap3D_imgs', 'Cap3D_imgs_view%d_CamMatrix'%i), exist_ok=True)
+os.makedirs(os.path.join(args.parent_dir, 'Cap3D_captions'), exist_ok=True)
 
 for uid_path in uid_paths:
     if not os.path.exists(uid_path):
@@ -267,7 +260,7 @@ for uid_path in uid_paths:
     bpy.ops.object.select_by_type(type='MESH')
     bpy.ops.object.delete()
     
-    _, ext = os.path.splitext(filepath)
+    _, ext = os.path.splitext(uid_path)
     ext = ext.lower()
     if ext in [".glb", ".gltf"]:
         bpy.ops.import_scene.gltf(filepath=uid_path)
@@ -295,7 +288,7 @@ for uid_path in uid_paths:
             bpy.context.scene.render.film_transparent = True
             camera.location = Vector((distance * ratio, - distance * ratio, distance * elevation_factor * ratio))
         elif camera_opt == 0:
-            img_path = './Cap3D_imgs/Cap3D_imgs_view_bg/%s_bg.png'%(uid_path.split('/')[-1].split('.')[0])
+            img_path = os.path.join(args.parent_dir, 'Cap3D_imgs', 'Cap3D_imgs_view_bg', '%s_bg.png'%(uid_path.split('/')[-1].split('.')[0]))
             img = Image.open(img_path)
             img_array = np.array(img)
             if np.sum(img_array<10) > 1020000:
@@ -354,12 +347,12 @@ for uid_path in uid_paths:
         bpy.context.scene.render.resolution_y = 512
 
         if camera_opt == -1:
-            file_path = './Cap3D_imgs/Cap3D_imgs_view_bg/%s_bg.png'%(uid_path.split('/')[-1].split('.')[0])
+            file_path = os.path.join(args.parent_dir, 'Cap3D_imgs', 'Cap3D_imgs_view_bg', '%s_bg.png'%(uid_path.split('/')[-1].split('.')[0]))
             bpy.context.scene.render.filepath = file_path
             if os.path.exists(file_path):
                continue
         else:
-            file_path = './Cap3D_imgs/Cap3D_imgs_view%d/%s_%d.png'%(camera_opt, uid_path.split('/')[-1].split('.')[0], camera_opt)
+            file_path = os.path.join(args.parent_dir, 'Cap3D_imgs', 'Cap3D_imgs_view%d'%camera_opt, '%s_%d.png'%(uid_path.split('/')[-1].split('.')[0], camera_opt))
             bpy.context.scene.render.filepath = file_path
             if os.path.exists(file_path):
                continue
@@ -384,7 +377,8 @@ for uid_path in uid_paths:
 
         if camera_opt>=0:
             RT = get_3x4_RT_matrix_from_blender(camera)
-            RT_path = os.path.join('./objaverse_rendered_rt_%d/%s_%d.npy'%(camera_opt, uid_path.split('/')[-1].split('.')[0], camera_opt))
+            
+            RT_path = os.path.join(args.parent_dir, 'Cap3D_imgs', 'Cap3D_imgs_view%d_CamMatrix'%camera_opt, '%s_%d.npy'%(uid_path.split('/')[-1].split('.')[0], camera_opt))
             if os.path.exists(RT_path):
                 continue
             np.save(RT_path, RT)

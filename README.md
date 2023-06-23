@@ -2,15 +2,14 @@
 
 [Tiange Luo*](https://tiangeluo.github.io/), [Chris Rockwell*](https://crockwell.github.io), [Honglak Lee†](https://web.eecs.umich.edu/~honglak/), [Justin Johnson†](https://web.eecs.umich.edu/~justincj) (*Equal contribution    †Equal Advising)
 
+We provide our codes for captioning and finetuning text-to-3D models in captioning_pipeline and text-to-3D directories, accordingly. Detailed instruction and where to download our model checkpoints can be found in each directory.
+
 Data download available at [Hugging Face](https://huggingface.co/datasets/tiange/Cap3D), including descriptive captions for 3D objects in Objaverse and ABO, along with Objaverse's point clouds, rendered images, and Shap-E latent codes.
 
 ## Overview
 Cap3D provides detailed descriptions of 3D objects by leveraging pretrained models in captioning, alignment, and LLM to consolidate multi-view information.
 
 <img src="teaser.png" alt="drawing">
-
-## Code
-We provide our codes for captioning and finetuning text-to-3D models in captioning_pipeline and text-to-3D directories, accordingly. Detailed instruction and where to download our model checkpoints can be found in each directory.
 
 
 ## Citation

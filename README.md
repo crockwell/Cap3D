@@ -12,8 +12,6 @@ Cap3D provides detailed descriptions of 3D objects by leveraging pretrained mode
 ## Code
 We provide our codes for captioning and finetuning text-to-3D models in captioning_pipeline and text-to-3D directories, accordingly. Detailed instruction and where to download our model checkpoints can be found in each directory.
 
-***We are still working on the codebase.***
-
 
 ## Citation
 If you find this code useful, please consider citing:

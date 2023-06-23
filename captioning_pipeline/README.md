@@ -7,6 +7,7 @@ Please move to `Cap3D/captioning_pipeline/` and download our Blender via the bel
 
 ```
 # assume your working directory is Cap3D/captioning_pipeline/
+
 wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
 unzip blender.zip
 ```
@@ -31,7 +32,7 @@ pip install salesforce-lavis
 
 Please run the below command, BLIP2 will generate caption for each view (a total of 8) and store as `{parent_dir}/Cap3D_captions/Cap3D_captions_view{0~7}.pkl`
 ```
-# --model_type: 'pretrain_flant5xxl' (**used in our paper**) or 'pretrain_flant5xl' (smaller)
+# --model_type: 'pretrain_flant5xxl' (used in our paper) or 'pretrain_flant5xl' (smaller)
 
 python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_flant5xl'
 

@@ -1,5 +1,4 @@
 # Captioning Pipeline: Rendering -> BLIP2 -> CLIP -> GPT4
-We are still working on the captioning codebase. Full details will be provided soon.
 
 ## Rendering
 Please first download blender or use your own blender with enough packages, and then run the render script.

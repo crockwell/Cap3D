@@ -6,7 +6,8 @@ This directory hosts our captioning pipeline code, which involves (1) rendering 
 Please move to `Cap3D/captioning_pipeline/` and download our Blender via the below commands. You can use your own Blender, while may need to pip install several packages.
 
 ```
-# assume your working directory is Cap3D/captioning_pipeline/
+git clone https://github.com/crockwell/Cap3D.git
+cd Cap3D/captioning_pipeline/ 
 
 wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
 unzip blender.zip

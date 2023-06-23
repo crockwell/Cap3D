@@ -1,7 +1,7 @@
 # Captioning Pipeline: Rendering -> BLIP2 -> CLIP -> GPT4
 
 ## Rendering
-Please first download blender or use your own blender with enough packages, and then run the render script.
+Please first download our Blender via the below commands. You can use your own Blender, while may need to pip install several packages.
 
 ```
 wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
@@ -9,6 +9,7 @@ mv blender.zip Cap3D/captioning_pipeline/
 unzip blender.zip
 ```
 
+Please run the below command to render objects (`.glb`, `.obj`) into `.png` images saved at `{parent_dir}/Cap3D_imgs/Cap3D_imgs_view{0~7}/`
 ```
 # --object_path_pkl: point to a pickle file which store the object path
 # --parent_dir: the directory store the rendered images and their associated camera matrix
@@ -22,12 +23,13 @@ Please install BLIP2:
 ```
 conda create -n Cap3D python=3.8
 conda activate Cap3D
+
 pip install salesforce-lavis
 ```
 
-Run the below command, BLIP2 will generate caption for each view (a total of 8) and store at `{parent_dir}/Cap3D_captions`
+Please run the below command, BLIP2 will generate caption for each view (a total of 8) and store as `{parent_dir}/Cap3D_captions/Cap3D_captions_view{0~7}.pkl`
 ```
-# we use 'pretrain_flant5xxl' in our paper. If it is too big, swtich to 'pretrain_flant5xl'.
+# --model_type: 'pretrain_flant5xxl' (ours) or 'pretrain_flant5xl' (smaller)
 
 python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_flant5xxl'
 
@@ -40,6 +42,7 @@ python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_f
 ## CLIP + GPT4
 Please install CLIP and GPT4-api first:
 ```
+conda activate Cap3D
 pip install openai
 pip install git+https://github.com/openai/CLIP.git
 ```

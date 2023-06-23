@@ -6,7 +6,7 @@ Please first download blender or use your own blender with enough packages, and 
 
 ```
 wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
-mv blender.zip Cap3D/captioning_pipeline
+mv blender.zip Cap3D/captioning_pipeline/
 unzip blender.zip
 ```
 
@@ -18,3 +18,21 @@ unzip blender.zip
 ./blender-3.4.1-linux-x64/blender -b -P render_script.py -- --object_path_pkl './example_material/example_object_path.pkl' --parent_dir './example_material'
 ```
 
+## BLIP2
+```
+conda create -n Cap3D python=3.8
+conda activate Cap3D
+pip install salesforce-lavis
+```
+
+Run the below command, BLIP2 will generate caption for each view (a total of 8) and store at `{parent_dir}/Cap3D_captions`
+```
+# we use 'pretrain_flant5xxl' in our paper. If it is too big, swtich to 'pretrain_flant5xl'.
+
+python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_flant5xxl'
+
+
+# use QA branch to generate geometrical descriptions (as shown in Figure 4, https://arxiv.org/abs//2306.07279)
+
+python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_flant5xxl' --use_qa
+```

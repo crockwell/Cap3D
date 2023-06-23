@@ -1,10 +1,10 @@
-# Scalable 3D Captioning with Pretrained Models
+# [Scalable 3D Captioning with Pretrained Models](https://arxiv.org/abs//2306.07279)
 
 [Tiange Luo*](https://tiangeluo.github.io/), [Chris Rockwell*](https://crockwell.github.io), [Honglak Lee†](https://web.eecs.umich.edu/~honglak/), [Justin Johnson†](https://web.eecs.umich.edu/~justincj) (*Equal contribution    †Equal Advising)
 
-We provide our codes for captioning and finetuning text-to-3D models in [captioning_pipeline](https://github.com/crockwell/Cap3D/tree/main/captioning_pipeline) and [text-to-3D](https://github.com/crockwell/Cap3D/tree/main/text-to-3D) directories, accordingly. Detailed instruction and where to download our model checkpoints can be found in each directory.
+We provide our codes for captioning and finetuning text-to-3D models in [captioning_pipeline](https://github.com/crockwell/Cap3D/tree/main/captioning_pipeline) and [text-to-3D](https://github.com/crockwell/Cap3D/tree/main/text-to-3D). Detailed instruction and where to download our model checkpoints can be found in each directory.
 
-Data download available at [Hugging Face](https://huggingface.co/datasets/tiange/Cap3D), including descriptive captions for 3D objects in Objaverse and ABO, along with Objaverse's point clouds, rendered images, and Shap-E latent codes.
+Data download available at [Hugging Face](https://huggingface.co/datasets/tiange/Cap3D), including descriptive captions for 3D objects in [Objaverse](https://objaverse.allenai.org/) and [ABO](https://amazon-berkeley-objects.s3.amazonaws.com/index.html), along with Objaverse's point clouds, rendered images, and Shap-E latent codes.
 
 ## Overview
 Cap3D provides detailed descriptions of 3D objects by leveraging pretrained models in captioning, alignment, and LLM to consolidate multi-view information.

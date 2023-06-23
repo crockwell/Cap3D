@@ -2,8 +2,11 @@
 We are still working on the captioning codebase. Full details will be provided soon.
 
 ## Rendering
-Please first download our Blender from https://huggingface.co/datasets/tiange/Cap3D/blob/main/blender.zip and unzip it at `Cap3D/captioning_pipelin`. then run the below command:
 ```
+wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
+mv blender.zip Cap3D/captioning_pipeline
+unzip blender.zip
+
 # --object_path_pkl: point to a pickle file which store the object path
 # --parent_dir: the directory store the rendered images and their associated camera matrix
 # Rendered images & camera matrix will stored at partent_dir/Cap3D_imgs/

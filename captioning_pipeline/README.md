@@ -3,11 +3,11 @@
 This directory hosts our captioning pipeline code, which involves (1) rendering 3D objects into eight views, (2) generating five captions per view with BLIP2, (3) selecting one caption per view using CLIP, and (4) consolidating a final caption from multi-view using GPT4. Example files in `./example_material` provide guidance on running our pipeline using the below commands.  You should be able to generate the final captions for the [ten example objects](https://github.com/crockwell/Cap3D/tree/main/captioning_pipeline/example_material/glbs).
 
 ## Rendering
-Please first download our Blender via the below commands. You can use your own Blender, while may need to pip install several packages.
+Please move to `Cap3D/captioning_pipeline/` and download our Blender via the below commands. You can use your own Blender, while may need to pip install several packages.
 
 ```
+# assume your working directory is Cap3D/captioning_pipeline/
 wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
-mv blender.zip Cap3D/captioning_pipeline/
 unzip blender.zip
 ```
 
@@ -31,7 +31,7 @@ pip install salesforce-lavis
 
 Please run the below command, BLIP2 will generate caption for each view (a total of 8) and store as `{parent_dir}/Cap3D_captions/Cap3D_captions_view{0~7}.pkl`
 ```
-# --model_type: 'pretrain_flant5xxl' (used in our paper) or 'pretrain_flant5xl' (smaller)
+# --model_type: 'pretrain_flant5xxl' (**used in our paper**) or 'pretrain_flant5xl' (smaller)
 
 python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_flant5xl'
 

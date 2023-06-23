@@ -2,7 +2,7 @@
 
 [Tiange Luo*](https://tiangeluo.github.io/), [Chris Rockwell*](https://crockwell.github.io), [Honglak Lee†](https://web.eecs.umich.edu/~honglak/), [Justin Johnson†](https://web.eecs.umich.edu/~justincj) (*Equal contribution    †Equal Advising)
 
-We provide our codes for captioning and finetuning text-to-3D models in captioning_pipeline and text-to-3D directories, accordingly. Detailed instruction and where to download our model checkpoints can be found in each directory.
+We provide our codes for captioning and finetuning text-to-3D models in [captioning_pipeline](https://github.com/crockwell/Cap3D/tree/main/captioning_pipeline) and [text-to-3D](https://github.com/crockwell/Cap3D/tree/main/text-to-3D) directories, accordingly. Detailed instruction and where to download our model checkpoints can be found in each directory.
 
 Data download available at [Hugging Face](https://huggingface.co/datasets/tiange/Cap3D), including descriptive captions for 3D objects in Objaverse and ABO, along with Objaverse's point clouds, rendered images, and Shap-E latent codes.
 

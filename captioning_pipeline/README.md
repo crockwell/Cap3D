@@ -1,5 +1,5 @@
 # Captioning Pipeline: Rendering -> BLIP2 -> CLIP -> GPT4
-We are still working on the captioning codebase. Detailed instruction will be provided soon.
+We are still working on the captioning codebase. Full details will be provided soon.
 
 ## Rendering
 Please first download our Blender from https://huggingface.co/datasets/tiange/Cap3D/blob/main/blender.zip and unzip it at `Cap3D/captioning_pipelin`. then run the below command:

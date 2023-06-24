@@ -53,6 +53,6 @@ Thanks to <a href="https://mbanani.github.io/">Mohamed El Banani</a>, <a href="h
 We also thank the below open-resource projects:
 - [PyTorch](https://www.github.com/pytorch/pytorch) 
 - [Blender](https://github.com/blender/blender)
-- [PyTorch3D](https://github.com/facebookresearch/pytorch3d).
+- [PyTorch3D](https://github.com/facebookresearch/pytorch3d)
 - [BLIP2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2)
 - [CLIP](https://github.com/openai/CLIP)

@@ -13,13 +13,35 @@ Cap3D provides detailed descriptions of 3D objects by leveraging pretrained mode
 
 
 ## Citation
-If you find this code useful, please consider citing:
+If you find our code or data useful, please consider citing:
 ```
 @article{luo2023scalable,
       title={Scalable 3D Captioning with Pretrained Models},
       author={Luo, Tiange and Rockwell, Chris and Lee, Honglak and Johnson, Justin},
       journal={arXiv preprint arXiv:2306.07279},
       year={2023}
+}
+```
+
+If you use our captions for Objaverse objects, please cite:
+```
+@inproceedings{deitke2023objaverse,
+  title={Objaverse: A universe of annotated 3d objects},
+  author={Deitke, Matt and Schwenk, Dustin and Salvador, Jordi and Weihs, Luca and Michel, Oscar and VanderBilt, Eli and Schmidt, Ludwig and Ehsani, Kiana and Kembhavi, Aniruddha and Farhadi, Ali},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={13142--13153},
+  year={2023}
+}
+```
+
+If you use our captions for ABO objects, please cite:
+```
+@inproceedings{collins2022abo,
+  title={Abo: Dataset and benchmarks for real-world 3d object understanding},
+  author={Collins, Jasmine and Goel, Shubham and Deng, Kenan and Luthra, Achleshwar and Xu, Leon and Gundogdu, Erhan and Zhang, Xi and Vicente, Tomas F Yago and Dideriksen, Thomas and Arora, Himanshu and others},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={21126--21136},
+  year={2022}
 }
 ```
 

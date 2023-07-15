@@ -11,15 +11,6 @@ import argparse
 from torch.nn import CosineSimilarity
 from PIL import Image
 
-'''
-sample: 
---gt_dir /nfs/turbo/justincj-turbo/shared_datasets/objaverse/hf-objaverse-v1/final_splits/objaverse/clip_features_test
---pred_dir /nfs/turbo/justincj-turbo/shared_datasets/objaverse/hf-objaverse-v1/final_splits/objaverse/clip_features_test
---test_uid_path /nfs/turbo/justincj-turbo/shared_datasets/objaverse/hf-objaverse-v1/final_splits/objaverse/test_uids.pkl 
---caption_path /nfs/turbo/justincj-turbo/shared_datasets/objaverse/hf-objaverse-v1/our_caption_merged.csv
-
-'''
-
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--fid", action="store_true", help="if true, evaluate FID")

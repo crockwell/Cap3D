@@ -34,7 +34,7 @@ Coming soon!
 
 ### Evaluate Generated Images on Test Set
 ```
-# Step 1. Run 'pip install git+https://github.com/openai/CLIP.git'
+# Step 1. Run 'pip install git+https://github.com/openai/CLIP.git' and 'pip install pytorch-fid'
 # Step 2. Obtain test uids, captions, and ground truth test images from HuggingFace
 # as test_uids.pkl, Cap3D_automated_Objaverse.csv, and test_images/
 # Step 3. Obtain renders synthesized from a model.

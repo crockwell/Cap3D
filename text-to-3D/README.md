@@ -36,12 +36,12 @@ Coming soon!
 ```
 # Step 1. Run 'pip install git+https://github.com/openai/CLIP.git' and 'pip install pytorch-fid'
 # Step 2. Obtain test uids, captions, and ground truth test images from HuggingFace: https://huggingface.co/datasets/tiange/Cap3D/tree/main/text-to-3D_test
-# as test_uids.pkl, Cap3D_automated_Objaverse.csv, and test_gt_images.zip (need to unzip)
+# as test_uids.pkl, Cap3D_automated_Objaverse.csv, and test_gt_images.zip (2000 shapes) [test_gt_images_300.zip (300 shapes)]
 # Step 3. Obtain renders synthesized from a model.
 
 # Basic Script
 python evaluate.py --clip_score_precision --fid --eval_size 2000 --gt_dir test_gt_images/ --pred_dir your_prediction/ --test_uid_path test_uids.pkl --caption_path Cap3D_automated_Objaverse.csv
 
-# For Point-E, Shap-E set eval_size as 2000, for DreamField, DreamFusion, 3DFuse set eval_size as 300
+# For Point-E, Shap-E set eval_size as 2000 (test_gt_images.zip), for DreamField, DreamFusion, 3DFuse set eval_size as 300 (test_gt_images_300.zip)
 # Must select only one of --fid or --clip_score_precision in a given call unless have multiple GPUs available. 
 ```

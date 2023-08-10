@@ -1,2 +1,5 @@
 captioning_pipeline/example_material/Cap3D_captions/
 captioning_pipeline/example_material/Cap3D_imgs/
+captioning_pipeline_my/
+captioning_pipeline/LAVIS/
+captioning_pipeline/blender-3.4.1-linux-x64/

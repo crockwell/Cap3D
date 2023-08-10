@@ -35,7 +35,7 @@ Please run the below command, BLIP2 will generate caption for each view (a total
 ```
 # --model_type: 'pretrain_flant5xxl' (used in our paper) or 'pretrain_flant5xl' (smaller)
 
-python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_flant5xl'
+python caption_blip2.py --parent_dir ./example_material --model_type 'pretrain_flant5xxl'
 
 
 # use QA branch to generate geometrical descriptions (as shown in Figure 4, https://arxiv.org/abs//2306.07279)

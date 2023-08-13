@@ -45,6 +45,10 @@ def main(view_number):
     print("len of new", len(all_imgs))
 
     for filename in tqdm(all_imgs):
+        # skip the images we have already generated captions
+        if os.path.exists(outfilename):
+                if os.path.basename(filename).split('.')[0] in all_output.keys():
+                    continue
         try:
             raw_image = Image.open(filename).convert("RGB")
         except:

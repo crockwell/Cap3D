@@ -10,7 +10,7 @@ Our finetuned models can be downloaded from https://huggingface.co/datasets/tian
 # first git clone https://github.com/openai/point-e.git, and install with pip install -e .
 # move finetune_pointE.py and corresponding files in example_material to point-e directory
 # need to modify --pts_pt_path to the directory you store the point clouds .pt files (download from https://huggingface.co/datasets/tiange/Cap3D/tree/main/PointCloud_pt_zips)
-# you may also change the caption and train/val set file path in line #52~53, 72~73
+# you may also change the caption and train/val set file path in line #48~49, #68~69
 
 python finetune_pointE.py --gpus 4 --batch_size 64 --save_name 'pointE_bs64_lr1e5' --pts_pt_path './Cap3D_pcs_pt'
 ```
@@ -20,7 +20,7 @@ python finetune_pointE.py --gpus 4 --batch_size 64 --save_name 'pointE_bs64_lr1e
 # first git clone https://github.com/openai/shap-e, and install with pip install -e .
 # move finetune_shapE.py and corresponding files in example_material to shap-e directory
 # need to modify --latent_code_path to the directory you store the shap-E latent code .pt files (download from https://huggingface.co/datasets/tiange/Cap3D/tree/main/ShapELatentCode_zips)
-# you may also change the caption and train/val set file path in line #48,49,68,69
+# you may also change the caption and train/val set file path in line #48~49, #68~69
 
 python finetune_shapE.py --gpus 4 --batch_size 16 --save_name 'shapE_bs16_lr1e5' --latent_code_path './Cap3D_latentcodes'
 ```

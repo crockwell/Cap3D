@@ -30,9 +30,7 @@ python finetune_shapE.py --gpus 4 --batch_size 16 --save_name 'shapE_bs16_lr1e5'
 Please go to the [point-e](https://github.com/crockwell/Cap3D/tree/main/text-to-3D/point-e) directory which provides the detailed instructions and code.
 
 ### Generate Test Images using Shape-E (Text-to-3D)
-```
-Coming soon!
-```
+Please go to the [shap-e](https://github.com/crockwell/Cap3D/tree/main/text-to-3D/shap-e) directory which provides the detailed instructions and code.
 
 ### Evaluate Generated Images on Test Set
 ```

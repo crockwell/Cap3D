@@ -19,4 +19,10 @@ python text2ply_pointE.py
 python text2ply_pointE.py --test_type '2k'
 ```
 
-4. we need to render the generated mesh into images for evaluation.
+4. we need to render the generated mesh into images for evaluation. First, download our blender, and then run the rendering script. The script will save rendered images at `./args.save_dir/Cap3D_imgs` by loading meshes from `./args.parent_dir`.
+```
+wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
+unzip blender.zip
+
+./blender-3.4.1-linux-x64/blender -b -P render_script_pointE.py -- --test_type '300' --save_dir './rendering_output' --parent_dir './pointE_inference/Cap3D_test1'
+```

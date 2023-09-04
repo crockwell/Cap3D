@@ -1,6 +1,6 @@
 # Generate Test Images using Point-E 
 
-# Usage
+## Usage
 
 1. Install with `pip install -e .`. Please refer to the [original repo](https://github.com/openai/point-e), if any errors occur.
 
@@ -11,7 +11,7 @@ mkdir model_ckpts
 mv pointE_finetuned_with_330kdata.pth model_ckpts
 ```
 
-3. execute the below command, the generated mesh will saved at `./pointE_inference/Cap3D_test1'`.
+3. execute the below command, the generated mesh will saved at `./pointE_inference/Cap3D_test1`.
 ```
 python text2ply_pointE.py
 
@@ -25,4 +25,26 @@ wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
 unzip blender.zip
 
 ./blender-3.4.1-linux-x64/blender -b -P render_script_pointE.py -- --test_type '300' --save_dir './rendering_output' --parent_dir './pointE_inference/Cap3D_test1'
+```
+
+## Citation
+
+if you use point-E model/data, please cite:
+```
+@article{nichol2022point,
+  title={Point-e: A system for generating 3d point clouds from complex prompts},
+  author={Nichol, Alex and Jun, Heewoo and Dhariwal, Prafulla and Mishkin, Pamela and Chen, Mark},
+  journal={arXiv preprint arXiv:2212.08751},
+  year={2022}
+}
+```
+
+If you find our code or data useful, please consider citing:
+```
+@article{luo2023scalable,
+      title={Scalable 3D Captioning with Pretrained Models},
+      author={Luo, Tiange and Rockwell, Chris and Lee, Honglak and Johnson, Justin},
+      journal={arXiv preprint arXiv:2306.07279},
+      year={2023}
+}
 ```

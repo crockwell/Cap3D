@@ -1,4 +1,4 @@
-# Point·E
+# Generate Test Images using Point-E 
 
 # Usage
 

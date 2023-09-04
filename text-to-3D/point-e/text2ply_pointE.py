@@ -1,3 +1,9 @@
+# ==============================================================================
+# Copyright (c) 2023 Tiange Luo, tiange.cs@gmail.com
+# Last modified: September 04, 2023
+#
+# This code is licensed under the MIT License.
+# ==============================================================================
 import torch
 from tqdm.auto import tqdm
 

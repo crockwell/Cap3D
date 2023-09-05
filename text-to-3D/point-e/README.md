@@ -15,8 +15,8 @@ mv pointE_finetuned_with_330kdata.pth model_ckpts
 ```
 python text2ply_pointE.py
 
-# if you need to generate test meshes for the 2k set:
-python text2ply_pointE.py --test_type '2k'
+# if you want to generate test meshes for the 300 set (smaller):
+python text2ply_pointE.py --test_type '300'
 ```
 
 4. we need to render the generated mesh into images for evaluation. First, download our blender, and then run the rendering script. The script will save rendered images at `./args.save_dir/Cap3D_imgs` by loading meshes from `./args.parent_dir`.

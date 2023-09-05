@@ -16,9 +16,6 @@ python text2img_shapE.py
 
 # if you need to generate images via nerf
 python text2ply_pointE.py --render_type 'nerf'
-
-# if you need to generate test images for the 2k set:
-python text2ply_pointE.py --test_type '2k'
 ```
 
 ## Citation

@@ -37,7 +37,7 @@ import time
 parser = argparse.ArgumentParser()
 parser.add_argument('--ckpt', default='pointE_finetuned_with_330kdata.pth', type=str, help="path to finetuned model")
 parser.add_argument('--save_name', default='Cap3D_test1', type=str, help="result files save to here")
-parser.add_argument('--test_type', default='300', type=str, choices=['300','2k'], help="300 or 2k test sets")
+parser.add_argument('--test_type', default='2k', type=str, choices=['300','2k'], help="300 or 2k test sets")
 opt = parser.parse_args()
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

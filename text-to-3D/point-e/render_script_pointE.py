@@ -17,7 +17,6 @@ import time
 import pickle
 from PIL import Image
 import random
-from IPython import embed
 
 ## solve the division problem
 from decimal import Decimal, getcontext

@@ -26,7 +26,6 @@ from point_e.util.plotting import plot_point_cloud
 from point_e.util.point_cloud import PointCloud
 from point_e.util.mesh import TriMesh
 import numpy as np
-from IPython import embed
 import trimesh
 import pickle
 

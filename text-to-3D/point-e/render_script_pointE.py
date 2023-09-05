@@ -24,7 +24,7 @@ from decimal import Decimal, getcontext
 getcontext().prec = 28  # Set the precision for the decimal calculations.
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--test_type', type = str, default='300', choices=['300','2k'])
+parser.add_argument('--test_type', type = str, default='2k', choices=['300','2k'])
 parser.add_argument("--parent_dir", type = str, default='./pointE_inference/Cap3D_test1')
 parser.add_argument("--save_dir", type = str, default='./rendering_output')
 

@@ -1,6 +1,9 @@
 # [Scalable 3D Captioning with Pretrained Models](https://arxiv.org/abs//2306.07279)
 
-[***Project Page***](https://cap3d-um.github.io/): [Tiange Luo*](https://tiangeluo.github.io/), [Chris Rockwell*](https://crockwell.github.io), [Honglak Lee†](https://web.eecs.umich.edu/~honglak/), [Justin Johnson†](https://web.eecs.umich.edu/~justincj) (*Equal contribution    †Equal Advising)
+<a href="https://cap3d-um.github.io/"><img src="https://img.shields.io/static/v1?label=Project&message=Website&color=red" height=20.5></a> 
+<a href="https://arxiv.org/abs/2306.07279"><img src="https://img.shields.io/badge/arXiv-2306.07279-b31b1b.svg" height=20.5></a>
+
+[Tiange Luo*](https://tiangeluo.github.io/), [Chris Rockwell*](https://crockwell.github.io), [Honglak Lee†](https://web.eecs.umich.edu/~honglak/), [Justin Johnson†](https://web.eecs.umich.edu/~justincj) (*Equal contribution    †Equal Advising)
 
 
 We provide our codes for captioning and finetuning text-to-3D models in [captioning_pipeline](https://github.com/crockwell/Cap3D/tree/main/captioning_pipeline) and [text-to-3D](https://github.com/crockwell/Cap3D/tree/main/text-to-3D). Detailed instruction and where to download our model checkpoints can be found in each directory.

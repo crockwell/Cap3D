@@ -19,7 +19,9 @@ python text2ply_pointE.py --render_type 'nerf'
 ```
 
 ## Extract Colorful PointClouds
-We also provide the code for extracting colorful pointclouds (support Objaverse objects). Please run `python extract_pointcloud.py`. You can look at the example files to see how to apply it to your own data.
+We also provide the code for extracting colorful pointclouds (support Objaverse objects). 
+
+Please run `python extract_pointcloud.py` and the results will be saved at `./extracted_pts`. You can look at the example files to see how to apply it to your own data.
 
 ## Citation
 

@@ -11,7 +11,6 @@ from shap_e.diffusion.gaussian_diffusion import diffusion_from_config
 from shap_e.models.download import load_model, load_config
 from shap_e.models.configs import model_from_config
 from shap_e.util.notebooks import create_pan_cameras, decode_latent_images, gif_widget
-from IPython import embed
 import os
 import time
 import argparse

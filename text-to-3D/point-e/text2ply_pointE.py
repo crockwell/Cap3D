@@ -13,7 +13,6 @@ from point_e.models.download import load_checkpoint, fetch_file_cached
 from point_e.models.configs import MODEL_CONFIGS, model_from_config
 from point_e.util.plotting import plot_point_cloud
 
-from IPython import embed
 import os
 from PIL import Image
 import torch

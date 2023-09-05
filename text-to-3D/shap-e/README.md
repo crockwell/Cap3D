@@ -18,6 +18,9 @@ python text2img_shapE.py
 python text2ply_pointE.py --render_type 'nerf'
 ```
 
+## Extract Colorful PointClouds
+We also provide the code for extracting colorful pointclouds (support Objaverse objects). Please run `python extract_pointcloud.py`. You can look at the example files to see how to apply it to your own data.
+
 ## Citation
 
 if you use shap-E model/data, please cite:

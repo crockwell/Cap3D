@@ -24,6 +24,7 @@ setup(
         "fire",
         "humanize",
         "requests",
+        "plyfile",
         "tqdm",
         "matplotlib",
         "scikit-image",

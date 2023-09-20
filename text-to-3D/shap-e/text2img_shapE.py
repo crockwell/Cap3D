@@ -18,8 +18,9 @@ import random
 from IPython import embed
 
 parser = argparse.ArgumentParser()
+parser.add_argument('--render_type', type = str, default='stf', choices=['stf','nerf'])
 parser.add_argument('--ckpt', default='shapE_finetuned_with_330kdata.pth', type=str, help="path to finetuned model")
-parser.add_argument('--save_name', default='Cap3D_test1_meshes', type=str, help="result files save to here")
+parser.add_argument('--save_name', default='Cap3D_test1', type=str, help="result files save to here")
 parser.add_argument('--test_type', default='2k', type=str, choices=['300','2k'], help="300 or 2k test sets")
 args = parser.parse_args()
 
@@ -40,13 +41,13 @@ import pandas as pd
 test_uids = pickle.load(open('../example_material/test_uids_%s.pkl'%args.test_type, 'rb'))
 captions = pd.read_csv('../example_material/Cap3D_automated_Objaverse.csv', header=None)
 
-outdir = './shapE_inference/%s'%(args.save_name)
+outdir = './shapE_inference/%s_%s'%(args.save_name, args.render_type)
 os.makedirs(outdir, exist_ok=True)
 
 print('start generation')
 for i in range(len(test_uids)):
     print('generating %d/%d : %s'%(i,len(test_uids), test_uids[i]))
-    if os.path.exists(os.path.join(outdir, '%s.ply'%(test_uids[i]))):
+    if os.path.exists(os.path.join(outdir, '%s_%d.png'%(test_uids[i],7))):
         continue
     prompt = captions[captions[0] == test_uids[i]][1].values[0]
     assert captions[captions[0] == test_uids[i]][0].values[0] == test_uids[i]
@@ -68,9 +69,12 @@ for i in range(len(test_uids)):
     )
 
     with torch.no_grad():
+        render_mode = args.render_type
         size = 512
 
-        # Save as meshes and then render
-        gen_mesh = decode_latent_mesh(xm, latents).tri_mesh()
-        with open(os.path.join(outdir,'%s.ply'%test_uids[i]), 'wb') as f:
-            gen_mesh.write_ply(f)
+        # Directly Save as images
+        cameras = create_pan_cameras(size, device)
+        images = decode_latent_images(xm, latents, cameras, rendering_mode=render_mode)
+        for j, image in enumerate(images):
+        #    # Save each image to a file. You can choose the format you prefer (png, jpg, etc.)
+            image.save(os.path.join(outdir,'%s_%d.png'%(test_uids[i],j)))

@@ -20,7 +20,7 @@ python text2img_shapE.py --save_name 'Cap3D_test1'
 python text2img_shapE.py --save_name 'Cap3D_test1' --render_type 'nerf'
 ```
 
-**3.2** Or you can first generate meshes and then render them via blender. First, download our blender, and then run the rendering script. The script will save rendered images at `./args.save_dir/Cap3D_imgs` by loading meshes from `./args.parent_dir+ '_' + args.test_type`.
+**3.2** Or you can first generate meshes and then render them via blender. After running the below commands, the generated meshes will save at `./shapE_inference/Cap3D_test1_meshes`, and the rendered images will save at `./args.save_dir/Cap3D_imgs`. (our paper did not use this type of rendering)
 ```
 python text2ply_shapE.py --save_name 'Cap3D_test1_meshes'
 

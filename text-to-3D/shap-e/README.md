@@ -10,12 +10,20 @@ mkdir model_ckpts
 mv shapE_finetuned_with_330kdata.pth model_ckpts
 ```
 
-3. execute the below command, the generated images will saved at `./shapE_inference/Cap3D_test1_stf` if `--render_type='stf'` and `./shapE_inference/Cap3D_test1_nerf` if `--render_type='nerf'` (difference between `'stf'` and `'nerf'` can be found in [shapE paper](https://arxiv.org/pdf/2305.02463.pdf).
+3. execute the below command, the generated meshes will be saved at `./shapE_inference/Cap3D_test1_stf` if `--render_type='stf'` and `./shapE_inference/Cap3D_test1_nerf` if `--render_type='nerf'` (difference between `'stf'` and `'nerf'` can be found in [shapE paper](https://arxiv.org/pdf/2305.02463.pdf).
 ```
-python text2img_shapE.py 
+python text2ply_shapE.py 
 
-# if you need to generate images via nerf
-python text2img_shapE.py --render_type 'nerf'
+# if you need to generate meshes via nerf
+python text2ply_shapE.py --render_type 'nerf'
+```
+
+4. we need to render the generated mesh into images for evaluation. First, download our blender, and then run the rendering script. The script will save rendered images at `./args.save_dir/Cap3D_imgs` by loading meshes from `./args.parent_dir+ '_' + args.test_type`.
+```
+wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
+unzip blender.zip
+
+./blender-3.4.1-linux-x64/blender -b -P render_script_shapE.py -- --test_type 'stf' --save_dir './rendering_output' --parent_dir './shapE_inference/Cap3D_test1'
 ```
 
 ## Extract Colorful PointClouds

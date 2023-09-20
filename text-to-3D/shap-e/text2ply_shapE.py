@@ -1,6 +1,6 @@
 # ==============================================================================
 # Copyright (c) 2023 Tiange Luo, tiange.cs@gmail.com
-# Last modified: September 04, 2023
+# Last modified: September 20, 2023
 #
 # This code is licensed under the MIT License.
 # ==============================================================================
@@ -10,11 +10,12 @@ from shap_e.diffusion.sample import sample_latents
 from shap_e.diffusion.gaussian_diffusion import diffusion_from_config
 from shap_e.models.download import load_model, load_config
 from shap_e.models.configs import model_from_config
-from shap_e.util.notebooks import create_pan_cameras, decode_latent_images, gif_widget
+from shap_e.util.notebooks import create_pan_cameras, decode_latent_images, gif_widget, decode_latent_mesh
 import os
 import time
 import argparse
 import random
+from IPython import embed
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--render_type', type = str, default='stf', choices=['stf','nerf'])
@@ -43,7 +44,9 @@ captions = pd.read_csv('../example_material/Cap3D_automated_Objaverse.csv', head
 outdir = './shapE_inference/%s_%s'%(args.save_name, args.render_type)
 os.makedirs(outdir, exist_ok=True)
 
+print('start generation')
 for i in range(len(test_uids)):
+    print('generating %d/%d : %s'%(i,len(test_uids), test_uids[i]))
     if os.path.exists(os.path.join(outdir, '%s_%d.png'%(test_uids[i],7))):
         continue
     prompt = captions[captions[0] == test_uids[i]][1].values[0]
@@ -69,8 +72,14 @@ for i in range(len(test_uids)):
         render_mode = args.render_type
         size = 512
 
-        cameras = create_pan_cameras(size, device)
-        images = decode_latent_images(xm, latents, cameras, rendering_mode=render_mode)
-        for j, image in enumerate(images):
-        #    # Save each image to a file. You can choose the format you prefer (png, jpg, etc.)
-            image.save(os.path.join(outdir,'%s_%d.png'%(test_uids[i],j)))
+        # Save as meshes and then render
+        gen_mesh = decode_latent_mesh(xm, latents).tri_mesh()
+        with open(os.path.join(outdir,'%s.ply'%test_uids[i]), 'wb') as f:
+            gen_mesh.write_ply(f)
+
+        # Directly Save as images
+        #cameras = create_pan_cameras(size, device)
+        #images = decode_latent_images(xm, latents, cameras, rendering_mode=render_mode)
+        #for j, image in enumerate(images):
+        ##    # Save each image to a file. You can choose the format you prefer (png, jpg, etc.)
+        #    image.save(os.path.join(outdir,'%s_%d.png'%(test_uids[i],j)))

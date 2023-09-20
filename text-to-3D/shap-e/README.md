@@ -1,7 +1,7 @@
 # Generate Test Images using Shap-E
 
 ## Usage
-1. Install with `pip install -e .`. Please make sure you download shap-E codes from this repo as there are some modifications different from original repos.
+1. Install with `pip install -e .`. Please make sure you download the shap-E code from this repo as there are modifications compared to the original repo.
 
 2. Download finetuned checkpoint from https://huggingface.co/datasets/tiange/Cap3D/tree/main/our_finetuned_models, and move it to `model_ckpts`.
 ```

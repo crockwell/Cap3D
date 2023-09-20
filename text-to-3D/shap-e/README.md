@@ -1,7 +1,7 @@
 # Generate Test Images using Shap-E
 
 ## Usage
-1. Install with `pip install -e .`. Please make sure you download the shap-E code from this repo as there are modifications compared to the original repo.
+1. Install with `pip install -e .`. Please make sure you download the shap-E code from this repo as there are modifications compared to the original repo. Additionally, you need to install [Pytorch3D](https://github.com/facebookresearch/pytorch3d) to render images via `stf` mode. You can skip installing Pytorch3D to generate meshes, while it is needed to calculate final numbers.
 
 2. Download finetuned checkpoint from https://huggingface.co/datasets/tiange/Cap3D/tree/main/our_finetuned_models, and move it to `model_ckpts`.
 ```
@@ -10,7 +10,7 @@ mkdir model_ckpts
 mv shapE_finetuned_with_330kdata.pth model_ckpts
 ```
 
-3. You can then execute step **3.1** to generate rendered images or step **3.2** to first generate meshes and then render them via blender. **In our paper, we used step 3.1 to generate images for final scores.**
+3. You can then execute step **3.1** to generate rendered images or step **3.2** to first generate meshes and then render them via blender. **In our paper, we used step 3.1 to generate images for final scores.** 
 
 **3.1** execute the below command, the generated images will be saved at `./shapE_inference/Cap3D_test1_stf` if `--render_type='stf'` and `./shapE_inference/Cap3D_test1_nerf` if `--render_type='nerf'` (difference between `'stf'` and `'nerf'` can be found in [shapE paper](https://arxiv.org/pdf/2305.02463.pdf).
 ```

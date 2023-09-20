@@ -12,10 +12,10 @@ mv shapE_finetuned_with_330kdata.pth model_ckpts
 
 3. execute the below command, the generated meshes will be saved at `./shapE_inference/Cap3D_test1_stf` if `--render_type='stf'` and `./shapE_inference/Cap3D_test1_nerf` if `--render_type='nerf'` (difference between `'stf'` and `'nerf'` can be found in [shapE paper](https://arxiv.org/pdf/2305.02463.pdf).
 ```
-python text2ply_shapE.py 
+python text2ply_shapE.py --save_name 'Cap3D_test1'
 
 # if you need to generate meshes via nerf
-python text2ply_shapE.py --render_type 'nerf'
+python text2ply_shapE.py --save_name 'Cap3D_test1' --render_type 'nerf'
 ```
 
 4. we need to render the generated mesh into images for evaluation. First, download our blender, and then run the rendering script. The script will save rendered images at `./args.save_dir/Cap3D_imgs` by loading meshes from `./args.parent_dir+ '_' + args.test_type`.

@@ -15,7 +15,6 @@ import os
 import time
 import argparse
 import random
-from IPython import embed
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--render_type', type = str, default='stf', choices=['stf','nerf'])
@@ -28,6 +27,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 xm = load_model('transmitter', device=device)
 model = load_model('text300M', device=device)
+# comment the below line to use the original model
 model.load_state_dict(torch.load('./model_ckpts/%s'%args.ckpt, map_location=device)['model_state_dict'])
 
 diffusion = diffusion_from_config(load_config('diffusion'))

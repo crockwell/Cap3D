@@ -1,7 +1,7 @@
 # Generate Test Images using Shap-E
 
 ## Usage
-1. Install with `pip install -e .`. Please refer to the [original repo](https://github.com/openai/shap-e), if any errors occur.
+1. Install with `pip install -e .`. Please make sure you download shap-E codes from this repo as there are some modifications different from original repos.
 
 2. Download finetuned checkpoint from https://huggingface.co/datasets/tiange/Cap3D/tree/main/our_finetuned_models, and move it to `model_ckpts`.
 ```
@@ -15,7 +15,7 @@ mv shapE_finetuned_with_330kdata.pth model_ckpts
 python text2img_shapE.py 
 
 # if you need to generate images via nerf
-python text2ply_pointE.py --render_type 'nerf'
+python text2img_shapE.py --render_type 'nerf'
 ```
 
 ## Extract Colorful PointClouds

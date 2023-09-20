@@ -23,14 +23,14 @@ from decimal import Decimal, getcontext
 getcontext().prec = 28  # Set the precision for the decimal calculations.
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--test_type', type = str, default='2k', choices=['300','2k'])
+parser.add_argument('--testset_type', type = str, default='2k', choices=['300','2k'])
 parser.add_argument("--parent_dir", type = str, default='./pointE_inference/Cap3D_test1')
 parser.add_argument("--save_dir", type = str, default='./rendering_output')
 
 argv = sys.argv[sys.argv.index("--") + 1 :]
 args = parser.parse_args(argv)
 
-test_uids = pickle.load(open('../example_material/test_uids_%s.pkl'%args.test_type, 'rb'))
+test_uids = pickle.load(open('../example_material/test_uids_%s.pkl'%args.testset_type, 'rb'))
 uid_paths = [os.path.join(args.parent_dir, u+'.ply') for u in test_uids]
 os.makedirs(args.save_dir, exist_ok=True)
 

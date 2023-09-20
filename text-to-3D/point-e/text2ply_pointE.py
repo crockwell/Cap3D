@@ -1,6 +1,6 @@
 # ==============================================================================
 # Copyright (c) 2023 Tiange Luo, tiange.cs@gmail.com
-# Last modified: September 04, 2023
+# Last modified: September 20, 2023
 #
 # This code is licensed under the MIT License.
 # ==============================================================================
@@ -35,7 +35,7 @@ import time
 parser = argparse.ArgumentParser()
 parser.add_argument('--ckpt', default='pointE_finetuned_with_330kdata.pth', type=str, help="path to finetuned model")
 parser.add_argument('--save_name', default='Cap3D_test1', type=str, help="result files save to here")
-parser.add_argument('--test_type', default='2k', type=str, choices=['300','2k'], help="300 or 2k test sets")
+parser.add_argument('--testset_type', default='2k', type=str, choices=['300','2k'], help="300 or 2k test sets")
 opt = parser.parse_args()
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -82,7 +82,7 @@ batch_size = 1
 
 import pickle
 import pandas as pd
-test_uids = pickle.load(open('../example_material/test_uids_%s.pkl'%opt.test_type, 'rb'))
+test_uids = pickle.load(open('../example_material/test_uids_%s.pkl'%opt.testset_type, 'rb'))
 ### add the below random command to parallel test
 # random.shuffle(test_uids)
 captions = pd.read_csv('../example_material/Cap3D_automated_Objaverse.csv', header=None)

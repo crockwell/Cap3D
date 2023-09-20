@@ -16,7 +16,7 @@ mv pointE_finetuned_with_330kdata.pth model_ckpts
 python text2ply_pointE.py
 
 # if you want to generate test meshes for the 300 set (smaller):
-python text2ply_pointE.py --test_type '300'
+python text2ply_pointE.py --testset_type '300'
 ```
 
 4. we need to render the generated mesh into images for evaluation. First, download our blender, and then run the rendering script. The script will save rendered images at `./args.save_dir/Cap3D_imgs` by loading meshes from `./args.parent_dir`.
@@ -24,7 +24,7 @@ python text2ply_pointE.py --test_type '300'
 wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
 unzip blender.zip
 
-./blender-3.4.1-linux-x64/blender -b -P render_script_pointE.py -- --test_type '300' --save_dir './rendering_output' --parent_dir './pointE_inference/Cap3D_test1'
+./blender-3.4.1-linux-x64/blender -b -P render_script_pointE.py -- --save_dir './rendering_output' --parent_dir './pointE_inference/Cap3D_test1'
 ```
 
 ## Citation

@@ -24,7 +24,6 @@ from decimal import Decimal, getcontext
 getcontext().prec = 28  # Set the precision for the decimal calculations.
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--test_type', type = str, default='stf', choices=['stf','nerf'])
 parser.add_argument('--testset_type', type = str, default='2k', choices=['300','2k'])
 parser.add_argument("--parent_dir", type = str, default='./shapE_inference/Cap3D_test1_meshes')
 parser.add_argument("--save_dir", type = str, default='./rendering_output')

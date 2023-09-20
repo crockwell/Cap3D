@@ -27,7 +27,7 @@ python text2ply_shapE.py --save_name 'Cap3D_test1_meshes'
 wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
 unzip blender.zip
 
-./blender-3.4.1-linux-x64/blender -b -P render_script_shapE.py -- --test_type 'stf' --save_dir './rendering_output' --parent_dir './shapE_inference/Cap3D_test1_meshes'
+./blender-3.4.1-linux-x64/blender -b -P render_script_shapE.py -- --save_dir './rendering_output' --parent_dir './shapE_inference/Cap3D_test1_meshes'
 ```
 
 ## Extract Colorful PointClouds

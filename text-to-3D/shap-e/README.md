@@ -10,9 +10,9 @@ mkdir model_ckpts
 mv shapE_finetuned_with_330kdata.pth model_ckpts
 ```
 
-3. You can then execute step **3.1** to generate rendered images or step **3.2** to first generate meshes and then render them via blender. In our paper, we used step 3.1 to generate images for final scores.
+3. You can then execute step **3.1** to generate rendered images or step **3.2** to first generate meshes and then render them via blender. **In our paper, we used step 3.1 to generate images for final scores.**
 
-3.1 execute the below command, the generated images will be saved at `./shapE_inference/Cap3D_test1_stf` if `--render_type='stf'` and `./shapE_inference/Cap3D_test1_nerf` if `--render_type='nerf'` (difference between `'stf'` and `'nerf'` can be found in [shapE paper](https://arxiv.org/pdf/2305.02463.pdf).
+**3.1** execute the below command, the generated images will be saved at `./shapE_inference/Cap3D_test1_stf` if `--render_type='stf'` and `./shapE_inference/Cap3D_test1_nerf` if `--render_type='nerf'` (difference between `'stf'` and `'nerf'` can be found in [shapE paper](https://arxiv.org/pdf/2305.02463.pdf).
 ```
 python text2img_shapE.py --save_name 'Cap3D_test1'
 
@@ -20,7 +20,7 @@ python text2img_shapE.py --save_name 'Cap3D_test1'
 python text2img_shapE.py --save_name 'Cap3D_test1' --render_type 'nerf'
 ```
 
-3.2 Or you can first generate meshes and then render them via blender. First, download our blender, and then run the rendering script. The script will save rendered images at `./args.save_dir/Cap3D_imgs` by loading meshes from `./args.parent_dir+ '_' + args.test_type`.
+**3.2** Or you can first generate meshes and then render them via blender. First, download our blender, and then run the rendering script. The script will save rendered images at `./args.save_dir/Cap3D_imgs` by loading meshes from `./args.parent_dir+ '_' + args.test_type`.
 ```
 python text2ply_shapE.py --save_name 'Cap3D_test1_meshes'
 

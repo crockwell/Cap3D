@@ -32,7 +32,7 @@ argv = sys.argv[sys.argv.index("--") + 1 :]
 args = parser.parse_args(argv)
 
 test_uids = pickle.load(open('../example_material/test_uids_%s.pkl'%args.testset_type, 'rb'))
-uid_paths = [os.path.join(args.parent_dir + '_' + args.test_type, u+'.ply') for u in test_uids]
+uid_paths = [os.path.join(args.parent_dir, u+'.ply') for u in test_uids]
 os.makedirs(args.save_dir, exist_ok=True)
 
 bpy.context.scene.render.engine = 'CYCLES'

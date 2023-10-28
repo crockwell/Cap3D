@@ -45,7 +45,7 @@ def get_clip_image_embeddings(pred_dir, eval_size, test_uid_path):
     device = "cuda"
     test_uids_total = pkl.load(open(test_uid_path, 'rb'))
     test_uids = test_uids_total[:eval_size]
-    clip_models = {"vit_b_32": "ViT-B/32", "vit_l_14": "ViT-L/14"}
+    clip_models = {"vit_b_32": "ViT-B/32"}
 
     for model_name, model_path in clip_models.items():
         print("inference on",model_name)
@@ -74,7 +74,7 @@ def get_clip_text_embeddings(gt_dir, test_uid_path, caption_path):
     test_uids = pkl.load(open(test_uid_path, 'rb'))
     captions = pd.read_csv(caption_path, header=None)
 
-    clip_models = {"vit_b_32": "ViT-B/32", "vit_l_14": "ViT-L/14"}
+    clip_models = {"vit_b_32": "ViT-B/32"}
 
     for model_name, model_path in clip_models.items():
         print("inference on",model_name)
@@ -97,7 +97,7 @@ def get_clip_text_embeddings(gt_dir, test_uid_path, caption_path):
 
 def compute_clip_score_precision(pred_dir, gt_dir, eval_size, test_uid_path, caption_path):
     cos = CosineSimilarity(dim=1, eps=1e-6)
-    clip_models = ["vit_b_32", "vit_l_14"]
+    clip_models = ["vit_b_32"]
 
     for model_name in clip_models:
         print("\n model name:", model_name)

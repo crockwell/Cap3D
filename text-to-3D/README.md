@@ -40,7 +40,7 @@ Please go to the [shap-e](https://github.com/crockwell/Cap3D/tree/main/text-to-3
 # Step 3. Obtain renders synthesized from a model.
 
 # Basic Script
-python evaluate.py --clip_score_precision --fid --eval_size 2000 --gt_dir test_gt_images_2k/ --pred_dir your_prediction/ --test_uid_path example_material/test_uids_2k.pkl --caption_path example_material/Cap3D_automated_Objaverse.csv
+python evaluate.py --clip_score_precision --fid --eval_size 2000 --gt_dir test_gt_images_2k/ --pred_dir your_prediction/ --test_uid_path ./example_material/test_uids_2k.pkl --caption_path ./example_material/Cap3D_automated_Objaverse.csv
 
 # For Point-E, Shap-E set eval_size as 2000 (test_gt_images_2k.zip), for DreamField, DreamFusion, 3DFuse set eval_size as 300 (test_gt_images_300.zip)
 # Must select only one of --fid or --clip_score_precision in a given call unless have multiple GPUs available. 

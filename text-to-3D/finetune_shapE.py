@@ -1,6 +1,7 @@
 # ==============================================================================
 # Copyright (c) 2023 Tiange Luo, tiange.cs@gmail.com
-# Last modified: June 22, 2023
+# Based on https://github.com/openai/shap-e
+# Last modified: November 10, 2023
 #
 # This code is licensed under the MIT License.
 # ==============================================================================
@@ -43,7 +44,7 @@ def setup_ddp(gpu, args):
 
     torch.cuda.set_device(gpu)
 
-class my_dataset(Dataset):
+class shapE_train_dataset(Dataset):
     def __init__(self, latent_code_path):
         self.captions = pd.read_csv('./example_material/Cap3D_automated_Objaverse.csv', header=None)
         self.valid_uid = list(pickle.load(open('./example_material/training_set.pkl','rb')))
@@ -63,7 +64,7 @@ class my_dataset(Dataset):
 
         return {'caption': self.captions[1][idx], 'latent': latent}
 
-class my_dataset_val(Dataset):
+class shapE_val_dataset(Dataset):
     def __init__(self, latent_code_path):
         self.captions = pd.read_csv('./example_material/Cap3D_automated_Objaverse.csv', header=None)
         self.valid_uid = list(pickle.load(open('./example_material/validation_set.pkl','rb')))
@@ -125,14 +126,14 @@ def train(rank, args):
         )
     
     diffusion = diffusion_from_config(load_config('diffusion'))
-    my_dataset = my_dataset(args.latent_code_path)
-    data_loader = DataLoader(my_dataset, batch_size=batch_size, num_workers=8, prefetch_factor=4, shuffle=True, drop_last=True)
-    my_dataset_val = my_dataset_val(args.latent_code_path)
+    my_dataset_train = shapE_train_dataset(args.latent_code_path)
+    data_loader = DataLoader(my_dataset_train, batch_size=batch_size, num_workers=8, prefetch_factor=4, shuffle=True, drop_last=True)
+    my_dataset_val = shapE_val_dataset(args.latent_code_path)
     data_loader_val = DataLoader(my_dataset_val, batch_size=batch_size, num_workers=8, prefetch_factor=4, drop_last=True)
 
 
     optimizer= optim.AdamW(model.parameters(), lr=learning_rate)
-    total_iter_per_epoch = int(len(my_dataset)/batch_size)
+    total_iter_per_epoch = int(len(my_dataset_train)/batch_size)
     lr_scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, niter*total_iter_per_epoch)
     if resume_flag:
         optimizer.load_state_dict(checkpoint['optimizer_state_dict'])

@@ -1,6 +1,7 @@
 # ==============================================================================
 # Copyright (c) 2023 Tiange Luo, tiange.cs@gmail.com
-# Last modified: June 22, 2023
+# Based on https://github.com/openai/point-e
+# Last modified: November 10, 2023
 #
 # This code is licensed under the MIT License.
 # ==============================================================================
@@ -43,7 +44,7 @@ def setup_ddp(gpu, args):
 
 
 # please modify the path to your data path
-class my_dataset(Dataset):
+class pointE_train_dataset(Dataset):
     def __init__(self, pts_path):
         self.captions = pd.read_csv('./example_material/Cap3D_automated_Objaverse.csv', header=None)
         self.valid_uid = list(pickle.load(open('./example_material/training_set.pkl','rb')))
@@ -52,6 +53,11 @@ class my_dataset(Dataset):
         for i in range(len(self.captions)):
             self.n2idx[self.captions[0][i]] = i
         self.pts_path = pts_path
+
+        # this is the index of the 1024 points in the point cloud, randomly generated via torch.randperm(16384)[:1024]
+        # it is fixed during training
+        # you can also generate your own index via Farthest Point Sampling (FPS) algorithm
+        self.pointcloud_1024index = torch.load('./example_material/pointE_pointcloud_1024index.pt')
         
 
     def __len__(self):
@@ -60,11 +66,11 @@ class my_dataset(Dataset):
     def __getitem__(self, i):
         idx = self.n2idx[self.final_uid[i]]
         assert self.final_uid[i] == self.captions[0][idx]
-        data_tensor = torch.load(os.path.join(self.pts_path, self.captions[0][idx]+'.pt'))
+        data_tensor = torch.load(os.path.join(self.pts_path, self.captions[0][idx]+'.pt'))[:,self.pointcloud_1024index]
 
         return {'caption': self.captions[1][idx], 'pts': data_tensor}
 
-class my_dataset_val(Dataset):
+class pointE_val_dataset(Dataset):
     def __init__(self, pts_path):
         self.captions = pd.read_csv('./example_material/Cap3D_automated_Objaverse.csv', header=None)
         self.valid_uid = list(pickle.load(open('./example_material/validation_set.pkl','rb')))
@@ -74,12 +80,17 @@ class my_dataset_val(Dataset):
             self.n2idx[self.captions[0][i]] = i
         self.pts_path = pts_path
 
+        # this is the index of the 1024 points in the point cloud, randomly generated via torch.randperm(16384)[:1024]
+        # it is fixed during training
+        # you can also generate your own index via Farthest Point Sampling (FPS) algorithm
+        self.pointcloud_1024index = torch.load('./example_material/pointE_pointcloud_1024index.pt')
+
     def __len__(self):
         return len(self.final_uid)
 
     def __getitem__(self, i):
         idx = self.n2idx[self.final_uid[i]]
-        data_tensor = torch.load(os.path.join(self.pts_path, self.captions[0][idx]+'.pt'))
+        data_tensor = torch.load(os.path.join(self.pts_path, self.captions[0][idx]+'.pt'))[:,self.pointcloud_1024index]
         assert self.final_uid[i] == self.captions[0][idx]
 
         return {'caption': self.captions[1][idx], 'pts': data_tensor}
@@ -125,15 +136,15 @@ def train(rank, args):
         )
     
     diffusion = diffusion_from_config(DIFFUSION_CONFIGS[base_name])
-    my_dataset = my_dataset(args.pts_pt_path)
-    data_loader = DataLoader(my_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
-    my_dataset_val = my_dataset_val(args.pts_pt_path)
+    my_dataset_train = pointE_train_dataset(args.pts_pt_path)
+    data_loader = DataLoader(my_dataset_train, batch_size=batch_size, shuffle=True, drop_last=True)
+    my_dataset_val = pointE_val_dataset(args.pts_pt_path)
     data_loader_val = DataLoader(my_dataset_val, batch_size=batch_size, num_workers=8, prefetch_factor=4, drop_last=True)
 
 
 
     optimizer= optim.AdamW(model.parameters(), lr=learning_rate)
-    total_iter_per_epoch = int(len(my_dataset)/batch_size)
+    total_iter_per_epoch = int(len(my_dataset_train)/batch_size)
     lr_scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, niter*total_iter_per_epoch)
     if resume_flag:
         optimizer.load_state_dict(checkpoint['optimizer_state_dict'])

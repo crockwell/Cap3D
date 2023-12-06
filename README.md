@@ -8,7 +8,7 @@
 
 Our 3D captioning codes can be found in the [captioning_pipeline](https://github.com/crockwell/Cap3D/tree/main/captioning_pipeline) folder, while the [text-to-3D](https://github.com/crockwell/Cap3D/tree/main/text-to-3D) folder contains codes for evaluating and fine-tuning text-to-3D models.
 
-Data download available at [Hugging Face](https://huggingface.co/datasets/tiange/Cap3D), including `785,150` descriptive captions for 3D objects in [Objaverse](https://objaverse.allenai.org/) and [ABO](https://amazon-berkeley-objects.s3.amazonaws.com/index.html), along with Objaverse's point clouds, rendered images, and Shap-E latent codes.
+Data download available at [Hugging Face](https://huggingface.co/datasets/tiange/Cap3D), including `785,150` descriptive captions for 3D objects in [Objaverse](https://objaverse.allenai.org/) and `6,440` for [ABO](https://amazon-berkeley-objects.s3.amazonaws.com/index.html), along with Objaverse's point clouds, rendered images, and Shap-E latent codes.
 
 ## Overview
 Cap3D provides detailed descriptions of 3D objects by leveraging pretrained models in captioning, alignment, and LLM to consolidate multi-view information.

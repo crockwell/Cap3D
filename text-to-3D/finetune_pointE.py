@@ -1,6 +1,5 @@
 # ==============================================================================
 # Copyright (c) 2023 Tiange Luo, tiange.cs@gmail.com
-# Based on https://github.com/openai/point-e
 # Last modified: November 10, 2023
 #
 # This code is licensed under the MIT License.

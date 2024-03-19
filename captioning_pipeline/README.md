@@ -9,7 +9,7 @@ Please move to `Cap3D/captioning_pipeline/` and download our Blender via the bel
 git clone https://github.com/crockwell/Cap3D.git
 cd Cap3D/captioning_pipeline/ 
 
-wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/blender.zip
+wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/misc/blender.zip
 unzip blender.zip
 ```
 

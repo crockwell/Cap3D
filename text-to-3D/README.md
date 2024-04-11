@@ -35,7 +35,7 @@ Please go to the [shap-e](https://github.com/crockwell/Cap3D/tree/main/text-to-3
 ### Evaluate Generated Images on Test Set
 ```
 # Step 1. Run 'pip install git+https://github.com/openai/CLIP.git' and 'pip install pytorch-fid'
-# Step 2. Obtain test uids, captions, and ground truth test images from HuggingFace: https://huggingface.co/datasets/tiange/Cap3D/tree/main/text-to-3D_test
+# Step 2. Obtain test uids, captions, and ground truth test images from HuggingFace: https://huggingface.co/datasets/tiange/Cap3D/tree/main/misc/text-to-3D_test
 # as Cap3D_automated_Objaverse.csv, test_uids_2k.pkl [test_uids_300.pkl], and test_gt_images_2k.zip  [test_gt_images_300.zip]
 # Step 3. Obtain renders synthesized from a model.
 

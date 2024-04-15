@@ -39,8 +39,6 @@ bpy.context.scene.cycles.samples = 16
 # bpy.context.scene.cycles.samples = 128
 bpy.context.preferences.addons['cycles'].preferences.compute_device_type = 'CUDA'
 bpy.context.scene.cycles.device = 'GPU'
-bpy.context.scene.cycles.use_denoising = True
-bpy.context.scene.cycles.denoiser = 'OPTIX'
 for scene in bpy.data.scenes:
     scene.cycles.device = 'GPU'
 
@@ -112,7 +110,7 @@ def compute_bounding_box(mesh_objects):
 
     return bbox_center, bbox_size
 
-# normalize objects
+# normalize objects 
 def normalize_and_center_objects(mesh_objects, normalization_range):
 
     bbox_center, bbox_size = compute_bounding_box(mesh_objects)
@@ -213,7 +211,7 @@ def create_light(name, light_type, energy, location, rotation):
     return light
 
 def three_point_lighting():
-
+    
     # Key ligh
     key_light = create_light(
         name="KeyLight",
@@ -251,64 +249,13 @@ for i in range(8):
     os.makedirs(os.path.join(args.parent_dir, 'Cap3D_imgs', 'Cap3D_imgs_view%d_CamMatrix'%i), exist_ok=True)
 os.makedirs(os.path.join(args.parent_dir, 'Cap3D_captions'), exist_ok=True)
 
-def load_ply(filepath):
-    import plyfile
-    plydata = plyfile.PlyData.read(filepath)
-
-    verts = np.vstack([plydata['vertex']['x'], plydata['vertex']['y'], plydata['vertex']['z']]).T
-    faces = np.vstack(plydata['face']['vertex_index'])
-    vertex_colors = np.vstack([plydata['vertex']['red'], plydata['vertex']['green'], plydata['vertex']['blue']]).T / 255
-
-    mesh = bpy.data.meshes.new(name="Imported PLY")
-    mesh.from_pydata(verts.tolist(), [], faces.tolist())
-
-    # create color layer
-    color_layer = mesh.vertex_colors.new()
-
-    # assign colors to vertices
-    for poly in mesh.polygons:
-        for loop_index in poly.loop_indices:
-            loop_vert_index = mesh.loops[loop_index].vertex_index
-            color_layer.data[loop_index].color = vertex_colors[loop_vert_index].tolist() + [1.0]
-
-    # create new material
-    mat = bpy.data.materials.new(name="VertexCol")
-
-    # enable 'use_nodes'
-    mat.use_nodes = True
-    nodes = mat.node_tree.nodes
-
-    # get the 'Material Output' node
-    material_output = nodes.get('Material Output')
-
-    # add 'Vertex Color' node
-    vertex_color_node = nodes.new(type='ShaderNodeVertexColor')
-
-    # add 'BSDF' node
-    bsdf_node = nodes.new(type='ShaderNodeBsdfPrincipled')
-
-    # link 'Vertex Color' node to 'BSDF' node
-    mat.node_tree.links.new(vertex_color_node.outputs['Color'], bsdf_node.inputs['Base Color'])
-
-    # link 'BSDF' node to 'Material Output' node
-    mat.node_tree.links.new(bsdf_node.outputs['BSDF'], material_output.inputs['Surface'])
-
-    # Create new object and link mesh and material
-    obj = bpy.data.objects.new("ImportedPLY", mesh)
-    obj.data.materials.append(mat)
-
-    # Link object to the current collection
-    bpy.context.collection.objects.link(obj)
-
-    return mesh
-
 for uid_path in uid_paths:
     if not os.path.exists(uid_path):
         continue
 
     bpy.ops.object.select_by_type(type='MESH')
     bpy.ops.object.delete()
-
+    
     _, ext = os.path.splitext(uid_path)
     ext = ext.lower()
     if ext in [".glb", ".gltf"]:
@@ -316,37 +263,8 @@ for uid_path in uid_paths:
     elif ext == '.obj':
         bpy.ops.import_scene.obj(filepath=uid_path)
 
-
     print('begin*************')
     mesh_objects = [obj for obj in bpy.context.scene.objects if obj.type == 'MESH']
-
-    for mesh_obj in mesh_objects:
-        # Create a new material
-        mat = bpy.data.materials.new(name="VertexColMaterial")
-        mesh_obj.data.materials.clear()
-        mesh_obj.data.materials.append(mat)
-
-        # Use 'Use nodes':
-        mat.use_nodes = True
-        nodes = mat.node_tree.nodes
-
-        # Clear default nodes
-        for node in nodes:
-            nodes.remove(node)
-
-        # Add a Vertex Color Node and a Diffuse BSDF shader
-        vertex_color_node = nodes.new(type='ShaderNodeVertexColor')
-        emission_shader = nodes.new(type='ShaderNodeEmission')
-        output_shader = nodes.new(type='ShaderNodeOutputMaterial')
-
-        # Connect the Vertex Color node to the Emission Shader
-        mat.node_tree.links.new(vertex_color_node.outputs["Color"], emission_shader.inputs["Color"])
-        # Connect the Emission Shader to the Material Output
-        mat.node_tree.links.new(emission_shader.outputs["Emission"], output_shader.inputs["Surface"])
-
-        # If your obj specifies a vertex color layer other than 'Col', you can adjust the name here:
-        if "Col" in mesh_obj.data.vertex_colors:
-            vertex_color_node.layer_name = "Col"
 
     # Compute the bounding box for the objects
     normalization_range = 1.0
@@ -442,7 +360,7 @@ for uid_path in uid_paths:
             location, rotation = cam.matrix_world.decompose()[0:2]
             R_world2bcam = rotation.to_matrix().transposed()
 
-            # Use location from matrix_world to account for constraints:
+            # Use location from matrix_world to account for constraints:     
             T_world2bcam = -1*R_world2bcam @ location
 
             # put into 3x4 matrix
@@ -455,7 +373,7 @@ for uid_path in uid_paths:
 
         if camera_opt>=0:
             RT = get_3x4_RT_matrix_from_blender(camera)
-
+            
             RT_path = os.path.join(args.parent_dir, 'Cap3D_imgs', 'Cap3D_imgs_view%d_CamMatrix'%camera_opt, '%s_%d.npy'%(uid_path.split('/')[-1].split('.')[0], camera_opt))
             if os.path.exists(RT_path):
                 continue

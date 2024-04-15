@@ -112,7 +112,7 @@ def compute_bounding_box(mesh_objects):
 
     return bbox_center, bbox_size
 
-# normalize objects 
+# normalize objects
 def normalize_and_center_objects(mesh_objects, normalization_range):
 
     bbox_center, bbox_size = compute_bounding_box(mesh_objects)
@@ -213,7 +213,7 @@ def create_light(name, light_type, energy, location, rotation):
     return light
 
 def three_point_lighting():
-    
+
     # Key ligh
     key_light = create_light(
         name="KeyLight",
@@ -254,7 +254,7 @@ os.makedirs(os.path.join(args.parent_dir, 'Cap3D_captions'), exist_ok=True)
 def load_ply(filepath):
     import plyfile
     plydata = plyfile.PlyData.read(filepath)
-    
+
     verts = np.vstack([plydata['vertex']['x'], plydata['vertex']['y'], plydata['vertex']['z']]).T
     faces = np.vstack(plydata['face']['vertex_index'])
     vertex_colors = np.vstack([plydata['vertex']['red'], plydata['vertex']['green'], plydata['vertex']['blue']]).T / 255
@@ -273,23 +273,23 @@ def load_ply(filepath):
 
     # create new material
     mat = bpy.data.materials.new(name="VertexCol")
-    
+
     # enable 'use_nodes'
     mat.use_nodes = True
     nodes = mat.node_tree.nodes
-    
+
     # get the 'Material Output' node
     material_output = nodes.get('Material Output')
-    
+
     # add 'Vertex Color' node
     vertex_color_node = nodes.new(type='ShaderNodeVertexColor')
-    
+
     # add 'BSDF' node
     bsdf_node = nodes.new(type='ShaderNodeBsdfPrincipled')
-    
+
     # link 'Vertex Color' node to 'BSDF' node
     mat.node_tree.links.new(vertex_color_node.outputs['Color'], bsdf_node.inputs['Base Color'])
-    
+
     # link 'BSDF' node to 'Material Output' node
     mat.node_tree.links.new(bsdf_node.outputs['BSDF'], material_output.inputs['Surface'])
 
@@ -308,7 +308,7 @@ for uid_path in uid_paths:
 
     bpy.ops.object.select_by_type(type='MESH')
     bpy.ops.object.delete()
-    
+
     _, ext = os.path.splitext(uid_path)
     ext = ext.lower()
     if ext in [".glb", ".gltf"]:
@@ -442,7 +442,7 @@ for uid_path in uid_paths:
             location, rotation = cam.matrix_world.decompose()[0:2]
             R_world2bcam = rotation.to_matrix().transposed()
 
-            # Use location from matrix_world to account for constraints:     
+            # Use location from matrix_world to account for constraints:
             T_world2bcam = -1*R_world2bcam @ location
 
             # put into 3x4 matrix
@@ -455,7 +455,7 @@ for uid_path in uid_paths:
 
         if camera_opt>=0:
             RT = get_3x4_RT_matrix_from_blender(camera)
-            
+
             RT_path = os.path.join(args.parent_dir, 'Cap3D_imgs', 'Cap3D_imgs_view%d_CamMatrix'%camera_opt, '%s_%d.npy'%(uid_path.split('/')[-1].split('.')[0], camera_opt))
             if os.path.exists(RT_path):
                 continue

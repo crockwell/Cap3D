@@ -3,11 +3,11 @@
 ## Usage
 1. Install with `pip install -e .`. Please make sure you download the shap-E code from this repo as there are modifications compared to the original repo. Additionally, you need to install [Pytorch3D](https://github.com/facebookresearch/pytorch3d) to render images via `stf` mode. You can skip installing Pytorch3D to generate meshes, while it is needed to calculate final numbers.
 
-2. Download finetuned checkpoint from https://huggingface.co/datasets/tiange/Cap3D/tree/main/our_finetuned_models, and move it to `model_ckpts`.
+2. Download finetuned checkpoint from https:https://huggingface.co/datasets/tiange/Cap3D/tree/main/misc/our_finetuned_models, and move it to `model_ckpts`.
 ```
-wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/our_finetuned_models/shapE_finetuned_with_330kdata.pth
+wget https://huggingface.co/datasets/tiange/Cap3D/resolve/main/misc/our_finetuned_models/shapE_finetuned_with_825kdata.pth
 mkdir model_ckpts
-mv shapE_finetuned_with_330kdata.pth model_ckpts
+mv shapE_finetuned_with_825kdata.pth model_ckpts
 ```
 
 3. You can then execute step **3.1** to generate rendered images or step **3.2** to first generate meshes and then render them via blender. **In our paper, we used step 3.1 to generate images for final scores.** 

@@ -26,6 +26,13 @@ If you find our code or data useful, please consider citing:
       journal={arXiv preprint arXiv:2306.07279},
       year={2023}
 }
+
+@article{luo2024view,
+      title={View Selection for 3D Captioning via Diffusion Ranking},
+      author={Luo, Tiange and Johnson, Justin and Lee, Honglak},
+      journal={arXiv preprint arXiv:2404.07984},
+      year={2024}
+}
 ```
 
 If you use our captions for Objaverse objects, please cite:

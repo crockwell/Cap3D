@@ -21,21 +21,26 @@ Cap3D provides detailed descriptions of 3D objects by leveraging pretrained mode
 If you find our code or data useful, please consider citing:
 ```
 @article{luo2023scalable,
-      title={Scalable 3D Captioning with Pretrained Models},
-      author={Luo, Tiange and Rockwell, Chris and Lee, Honglak and Johnson, Justin},
-      journal={arXiv preprint arXiv:2306.07279},
-      year={2023}
+  title={Scalable 3d captioning with pretrained models},
+  author={Luo, Tiange and Rockwell, Chris and Lee, Honglak and Johnson, Justin},
+  journal={Advances in Neural Information Processing Systems},
+  volume={36},
+  pages={75307--75337},
+  year={2023}
 }
 
-@article{luo2024view,
-      title={View Selection for 3D Captioning via Diffusion Ranking},
-      author={Luo, Tiange and Johnson, Justin and Lee, Honglak},
-      journal={arXiv preprint arXiv:2404.07984},
-      year={2024}
+@inproceedings{luo2024view,
+  title={View selection for 3d captioning via diffusion ranking},
+  author={Luo, Tiange and Johnson, Justin and Lee, Honglak},
+  booktitle={European Conference on Computer Vision},
+  pages={180--197},
+  year={2024},
+  organization={Springer}
 }
 ```
+<details>
+<summary>If you use our captions for Objaverse objects, please cite:</summary>
 
-If you use our captions for Objaverse objects, please cite:
 ```
 @inproceedings{deitke2023objaverse,
   title={Objaverse: A universe of annotated 3d objects},
@@ -45,8 +50,10 @@ If you use our captions for Objaverse objects, please cite:
   year={2023}
 }
 ```
+</details>
 
-If you use our captions for ABO objects, please cite:
+<details>
+<summary>If you use our captions for ABO objects, please cite:</summary>
 ```
 @inproceedings{collins2022abo,
   title={Abo: Dataset and benchmarks for real-world 3d object understanding},
@@ -56,6 +63,7 @@ If you use our captions for ABO objects, please cite:
   year={2022}
 }
 ```
+</details>
 
 ## Acknowledgments
 This work is supported by two grants from LG AI Research and Grant #1453651 from NSF.
